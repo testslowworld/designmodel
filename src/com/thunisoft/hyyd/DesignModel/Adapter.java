@@ -24,16 +24,17 @@ public class Adapter {
  */
 
 class DispacherServlet{
-    List <AdapterMapping> adpterMappings;
+    List <HandlerAdapter> handlerAdapter;
+    List <HandlerMapping> handlerMappings;
     static class Init {
-        private final static List <AdapterMapping> adpterMappings = new ArrayList<AdapterMapping>();
+        private final static List <HandlerAdapter> handlerAdapter = new ArrayList<HandlerAdapter>();
     }
     public DispacherServlet() {
-        adpterMappings  = Init.adpterMappings;
-        adpterMappings.add(new AnnotationAdapter());
+        handlerAdapter  = Init.handlerAdapter;
+        handlerAdapter.add(new AnnotationHandlerAdapter());
     }
     public void doDispacher(HttpServletRequest request,HttpServletResponse response){
-        for (AdapterMapping adpterMapping:adpterMappings) {
+        for (HandlerAdapter adpterMapping:handlerAdapter) {
             if(adpterMapping.support(request)){
                 adpterMapping.handler(request);
             }
@@ -41,11 +42,11 @@ class DispacherServlet{
     }
     
 }
-interface Controller{
+interface HandlerMapping{
     void handler();
 }
 
-class AnnotationController implements Controller{
+class AnnotationController implements HandlerMapping{
 
     public void handler() {
         
@@ -53,13 +54,13 @@ class AnnotationController implements Controller{
     
 }
 
-interface AdapterMapping {
+interface HandlerAdapter {
     boolean support(HttpServletRequest request);
     void handler(HttpServletRequest request);
 }
 
 
-class AnnotationAdapter implements AdapterMapping{
+class AnnotationHandlerAdapter implements HandlerAdapter{
     AnnotationController annotationController;
     public boolean support(HttpServletRequest request) {
         if(request !=null&&request instanceof AnnotationController){
