@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 public class Adapter {
+    
     /**
      * 通过springmvc 学习适配器模式
      */
@@ -14,6 +15,7 @@ public class Adapter {
 // Controller   相当于不同的Adaptee   
 // HttpRequestHandler  相当于不同的Adaptee   
 // HandlerAdapter   适配器接口
+//    AdvisorAdapter
     
 }
 
