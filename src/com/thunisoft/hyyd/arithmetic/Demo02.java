@@ -17,12 +17,6 @@ public class Demo02 {
 			count++;
 			System.out.println(value);
 		}
-		
-		
-		
-		
 	}
-	
-	
 
 }
