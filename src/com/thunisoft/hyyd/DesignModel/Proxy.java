@@ -9,8 +9,8 @@ import org.springframework.cglib.proxy.MethodProxy;
 
 public class Proxy {
     public static void main(String[] args) {
-        //        testJdkProxy();
-        testCglibProxy();
+        testJdkProxy();
+        //        testCglibProxy();
 
     }
 
@@ -54,6 +54,7 @@ class Handler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         method.invoke(target, args);
+        System.out.println("调用了动态代理");
         return null;
     }
 
