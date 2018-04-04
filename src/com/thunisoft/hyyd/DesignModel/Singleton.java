@@ -1,15 +1,28 @@
 package com.thunisoft.hyyd.DesignModel;
 
 public class Singleton {
-    
-    private Singleton() {}
-    
-    static class Single{
-        private static Singleton getInstance = new Singleton();
+    public static void TestStaticInnerClass() {
+        for (int i = 0; i < 2; i++) {
+            System.out.println(StaticInnerClass.getInstance());
+        }
     }
-    
+
     public static void main(String[] args) {
-        Singleton s = Singleton.Single.getInstance;
+        TestStaticInnerClass();
+    }
+
+}
+
+class StaticInnerClass {
+    static class Inner {
+        private static StaticInnerClass inner = new StaticInnerClass();
+    }
+
+    public static StaticInnerClass getInstance() {
+        return StaticInnerClass.Inner.inner;
+    }
+    private StaticInnerClass() {
+        System.out.println("运行构造函数");
     }
 
 }
