@@ -4,6 +4,20 @@
   <artifactId>DesignModel</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <dependencies>
+		<dependency>
+		    <groupId>io.netty</groupId>
+		    <artifactId>netty-all</artifactId>
+		    <version>5.0.0.Alpha2</version>
+		</dependency> 
+		
+		<!-- kryo -->
+		<dependency>
+		    <groupId>com.esotericsoftware.kryo</groupId>
+		    <artifactId>kryo</artifactId>
+		    <version>2.24.0</version>
+		</dependency>
+		 		
+  
   		<dependency>
 			<groupId>org.apache.openejb</groupId>
 			<artifactId>javaee-api</artifactId>
