@@ -17,10 +17,11 @@ import io.netty.handler.codec.string.StringEncoder;
 public class ImClient {
     public static void main(String[] args) throws InterruptedException {
         String host = "127.0.0.1";
-        int port = 2222;
-        Channel channel = new ImClient().connect(host, port);
-        channel.writeAndFlush("yinjihuan");
-        Thread.sleep(100000);
+        System.out.println(host.hashCode());
+        //        int port = 2222;
+        //        Channel channel = new ImClient().connect(host, port);
+        //        channel.writeAndFlush("yinjihuan");
+        //        Thread.sleep(100000);
     }
     private Channel channel;
 
