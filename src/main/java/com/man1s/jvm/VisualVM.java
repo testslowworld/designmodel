@@ -39,6 +39,9 @@ public class VisualVM {
             }
 
         }
+        if (clazz == VisualVM.class) {
+
+        }
         System.out.println();
         System.out.println("用时," + (System.currentTimeMillis() - start));
         System.out.println(doubles.get(size - 10000));
@@ -49,6 +52,7 @@ public class VisualVM {
     public static void main(String[] args) {
         System.out.println("point 1");
         addDouble(10000000);
+        addDouble(100002000);
         System.out.println("point 3");
     }
 

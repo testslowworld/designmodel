@@ -1,5 +1,9 @@
 package com.man1s.classloader;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 /**
  * Title:Test
  * Description:
@@ -12,7 +16,41 @@ package com.man1s.classloader;
 public class Test {
 
     public static void main(String[] args) {
-
+        Map<String, String> strMap = new HashMap<String, String>();
+        String tempStr = "";
+        long ts = System.currentTimeMillis();
+        for (int i = 0; i < 1000000; i++) {
+            strMap.put(String.valueOf(i), String.valueOf(i + 1));
+        }
+        long t0 = System.currentTimeMillis();
+        for (int i = 0; i < 100; i++) {
+            Iterator<String> ketIter = strMap.keySet().iterator();
+            while (ketIter.hasNext()) {
+                tempStr = ketIter.next();
+                tempStr = strMap.get(tempStr);
+            }
+        }
+        long t1 = System.currentTimeMillis();
+        for (int i = 0; i < 100; i++) {
+            for (String key : strMap.keySet()) {
+                tempStr = key;
+                tempStr = strMap.get(key);
+            }
+        }
+        long t2 = System.currentTimeMillis();
+        for (int i = 0; i < 100; i++) {
+            Iterator<Map.Entry<String, String>> strMapItor = strMap.entrySet().iterator();
+            while (strMapItor.hasNext()) {
+                Map.Entry<String, String> entry = strMapItor.next();
+                tempStr = entry.getKey();
+                tempStr = entry.getValue();
+            }
+        }
+        long t3 = System.currentTimeMillis();
+        System.out.println("Time0--" + (t0 - ts));
+        System.out.println("Time1--" + (t1 - t0));
+        System.out.println("Time2--" + (t2 - t1));
+        System.out.println("Time3--" + (t3 - t2));
 
     }
 

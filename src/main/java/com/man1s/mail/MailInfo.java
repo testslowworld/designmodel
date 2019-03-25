@@ -17,7 +17,7 @@ public class MailInfo {
     //用户授权码 不是用户名密码 可以自行查看相关邮件服务器怎么查看
     private String formPassword;
     //消息回复邮箱
-    private String replayAddress;
+    private String replayAddress = "";
     //发送地址
     private String toAddress;
     //发送主题
