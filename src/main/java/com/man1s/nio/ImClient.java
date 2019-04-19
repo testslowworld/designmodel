@@ -12,7 +12,7 @@ public class ImClient {
     public static void main(String[] args) throws InterruptedException {
         String host = "127.0.0.1";
         System.out.println(host.hashCode());
-        int port = 2222;
+        int port = 8080;
         Channel channel = new ImClient().connect(host, port);
         channel.writeAndFlush("yinjihuan");
         Thread.sleep(10000);
@@ -49,10 +49,11 @@ public class ImClient {
 
 }
 
-class ClientStringHandler extends ChannelHandlerAdapter {
+class ClientStringHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         System.out.println("client:" + msg.toString());
+        ctx.writeAndFlush("testing");
     }
 
     @Override

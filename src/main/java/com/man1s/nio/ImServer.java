@@ -23,7 +23,8 @@ public class ImServer {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         ServerBootstrap bootstrap = new ServerBootstrap();
-        bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
+        bootstrap.group(bossGroup, workerGroup)
+                .channel(NioServerSocketChannel.class)
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     public void initChannel(SocketChannel ch) {
@@ -31,7 +32,9 @@ public class ImServer {
                         ch.pipeline().addLast("encoder", new StringEncoder());
                         ch.pipeline().addLast(new ServerStringHandler());
                     }
-                }).option(ChannelOption.SO_BACKLOG, 128).childOption(ChannelOption.SO_KEEPALIVE, true);
+                })
+                .option(ChannelOption.SO_BACKLOG, 128)
+                .childOption(ChannelOption.SO_KEEPALIVE, true);
         try {
             ChannelFuture f = bootstrap.bind(port).sync();
             f.channel().closeFuture().sync();
@@ -44,7 +47,7 @@ public class ImServer {
     }
 }
 
-class ServerStringHandler extends ChannelHandlerAdapter {
+class ServerStringHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         System.err.println("server:" + msg.toString());
