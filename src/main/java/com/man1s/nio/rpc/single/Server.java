@@ -7,15 +7,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
-/**
- * Title:Server
- * Description:
- * Company:北京华宇元典信息服务有限公司
- *
- * @author:wangjiyu
- * @version:1.0
- * @date:2019/4/19 14:40
- */
 public class Server {
     public static void main(String[] args) throws Exception {
 
@@ -48,9 +39,18 @@ class DiscardServerHandler extends ChannelInboundHandlerAdapter { // (1)
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) { // (2)
-        System.out.println(msg);
-        ctx.writeAndFlush(msg + "return");
+      /*  JSONObject req = JSON.parseObject(msg.toString());
+        String method = req.getString("method");
+        String params = req.getString("params");
+        System.out.println("调用方法" + method + "使用参数" + params);
+        ctx.writeAndFlush("返回结果");*/
     }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        ctx.read();
+    }
+
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) { // (4)

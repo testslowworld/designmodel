@@ -1,5 +1,6 @@
 package com.man1s.nio.rpc.single;
 
+import com.alibaba.fastjson.JSONObject;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -8,20 +9,17 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
-
-/**
- * Title:Client
- * Description:
- * Company:北京华宇元典信息服务有限公司
- *
- * @author:wangjiyu
- * @version:1.0
- * @date:2019/4/19 14:40
- */
 public class Client {
     public static void main(String[] args) throws Exception {
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        for (int i = 0; i < 10; i++) {
+            deal(i);
+        }
+        Thread.sleep(10000);
+    }
 
+
+    private static void deal(int i) throws Exception {
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             Bootstrap b = new Bootstrap(); // (1)
             b.group(workerGroup); // (2)
@@ -30,15 +28,20 @@ public class Client {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
-                    ch.pipeline().addLast(new ReadHandler());
                     ch.pipeline().addLast("decoder", new StringDecoder());
                     ch.pipeline().addLast("encoder", new StringEncoder());
+                    ch.pipeline().addLast(new ReadHandler());
                 }
             });
 
             ChannelFuture f = b.connect("localhost", 8080).sync(); // (5)
             Channel channel = f.channel();
-            channel.writeAndFlush("1313");
+            JSONObject req = new JSONObject();
+            req.put("method", "method");
+            req.put("params", "params");
+            req.put(i + "", i);
+            channel.writeAndFlush(req.toString());
+
         } finally {
             workerGroup.shutdownGracefully();
         }
@@ -50,7 +53,6 @@ class ReadHandler extends ChannelInboundHandlerAdapter { // (1)
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) { // (2)
         System.out.println(msg);
-        ctx.writeAndFlush(msg);
     }
 
     @Override

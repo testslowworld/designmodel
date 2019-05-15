@@ -2,68 +2,30 @@ package com.man1s.designmodel;
 
 public class Strategy {
     public static void main(String[] args) {
-        new InvocateSing(new Zhous()).start();
-        new InvocateSing(new Jacks()).start();
-    }
-
-}
-
-class InvocateSing {
-    private Sings sings;
-
-    public InvocateSing(Sings sings) {
-        this.sings = sings;
-    }
-
-    void start() {
-        sings.preSing();
-        sings.Sing();
-        sings.postSing();
+        CashContext context = new CashContext();
+        context.initCashType("reduce");
+        double result = context.cal(200, 10);
+        System.out.println(result);
     }
 }
 
-interface Sings {
-    void preSing();
+class CashContext {
+    private SuperCash cash;
 
-    void Sing();
+    public void initCashType(String type) {
+        switch (type) {
+            case "reduce":
+                cash = new FullReduce(200, 50);
+                break;
+            case "charge":
+                cash = new DiscountCash(0.8);
+                break;
 
-    void postSing();
+        }
+    }
+
+    public double cal(double firstText, double secText) {
+        return cash.cal(firstText, secText);
+    }
 }
 
-class Zhous implements Sings {
-
-    @Override
-    public void preSing() {
-        System.out.println("周董准备唱歌");
-    }
-
-    @Override
-    public void Sing() {
-        System.out.println("周董唱歌");
-    }
-
-    @Override
-    public void postSing() {
-        System.out.println("周董结束唱歌");
-    }
-
-}
-
-class Jacks implements Sings {
-
-    @Override
-    public void preSing() {
-        System.out.println("Jack准备唱歌");
-    }
-
-    @Override
-    public void Sing() {
-        System.out.println("Jack唱歌");
-    }
-
-    @Override
-    public void postSing() {
-        System.out.println("Jack结束唱歌");
-    }
-
-}
